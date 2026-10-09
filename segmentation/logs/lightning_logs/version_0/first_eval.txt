@@ -1,0 +1,16 @@
+train/metrics/iou@0.40:0.0, 
+train/metrics/iou@0.50:0.0, 
+train/metrics/iou_with_occlusions@0.40:0.0, 
+train/metrics/iou_with_occlusions@0.50:0.0, 
+val/loss:0.012176222167909145, 
+val/loss/visible:0.012112190946936607, 
+val/loss/center:0.0006403588340617716, 
+val/metrics/iou@0.40:0.37799271941185, 
+val/metrics/iou@0.50:0.36528584361076355, 
+val/metrics/iou_with_occlusions@0.40:0.3420863151550293, 
+val/metrics/iou_with_occlusions@0.50:0.3054831922054291, 
+epoch:0, 
+step:0
+
+From speed.py:
+inference latency: 5.318 ms, speed: 188.028 fps

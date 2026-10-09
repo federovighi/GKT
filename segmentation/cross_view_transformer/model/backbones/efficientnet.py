@@ -56,7 +56,7 @@ class EfficientNetExtractor(torch.nn.Module):
 
         # We can set memory efficient swish to false since we're using checkpointing
         net = EfficientNet.from_pretrained(
-            model_name, weights_path="../../../pretrained_models/efficientnet-b4-6ed6700e.pth")
+            model_name, weights_path="/home/federicorovighi/projects/pretrained_models/efficientnet-b4-6ed6700e.pth")
         net.set_swish(False)
 
         drop = net._global_params.drop_connect_rate / len(net._blocks)

@@ -1,0 +1,5 @@
+- data=nuscenes
+- data.version=v1.0-trainval
+- data.dataset_dir=/media/franco/hdd/dataset/nuscenes_full/nuscenes
+- data.labels_dir=/media/franco/hdd/dataset/nuscenes_full/GKT_labels
+- visualization=nuscenes_viz

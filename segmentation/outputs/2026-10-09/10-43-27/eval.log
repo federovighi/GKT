@@ -1,0 +1,6 @@
+[2026-10-09 10:43:27,879][torch.distributed.nn.jit.instantiator][INFO] - Created a temporary directory at /tmp/tmpvmlule09
+[2026-10-09 10:43:27,879][torch.distributed.nn.jit.instantiator][INFO] - Writing /tmp/tmpvmlule09/_remote_module_non_sriptable.py
+[2026-10-09 10:43:28,067][__main__][INFO] - Searching /home/federicorovighi/projects/GKT/GKT_repo/segmentation/logs.
+[2026-10-09 10:43:29,906][torch.distributed.distributed_c10d][INFO] - Added key: store_based_barrier_key:1 to store for rank: 0
+[2026-10-09 10:43:29,906][torch.distributed.distributed_c10d][INFO] - Rank 0: Completed store-based barrier for key:store_based_barrier_key:1 with 1 nodes.
+[2026-10-09 10:43:29,955][cross_view_transformer.tabular_logger][WARNING] - Missing logger folder: /home/federicorovighi/projects/GKT/GKT_repo/segmentation/logs/lightning_logs

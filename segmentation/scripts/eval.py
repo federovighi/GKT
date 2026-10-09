@@ -86,7 +86,7 @@ def main(cfg):
                          **cfg.trainer)
     model_module.eval()
     with torch.no_grad():
-        trainer.validate(model_module, data_module, ckpt_path=ckpt_path)
+        trainer.validate(model_module, data_module)
 
 
 if __name__ == '__main__':
