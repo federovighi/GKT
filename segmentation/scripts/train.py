@@ -55,8 +55,14 @@ def main(cfg):
     tab_logger = TabularLogger(save_dir=cfg.experiment.save_dir)
     callbacks = [
         LearningRateMonitor(logging_interval='epoch'),
-        ModelCheckpoint(filename='model',
-                        every_n_train_steps=cfg.experiment.checkpoint_interval),
+        ModelCheckpoint(
+            dirpath="/home/federicorovighi//projects/GKT/GKT_repo/segmentation/checkpoints/45epochs",
+            filename='epoch={epoch}-step={step}', 
+            auto_insert_metric_name=False, 
+            every_n_epochs=1, 
+            save_top_k=-1, 
+            save_last=False
+        ),
 
         VisualizationCallback(viz_fn, cfg.experiment.log_image_interval),
     ]

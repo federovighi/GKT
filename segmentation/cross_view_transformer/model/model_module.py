@@ -92,3 +92,6 @@ class ModelModule(pl.LightningModule):
             scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, **self.scheduler_args)
 
         return [optimizer], [{'scheduler': scheduler, 'interval': 'step'}]
+
+    def lr_scheduler_step(self, scheduler, optimizer_idx, metric):
+        scheduler.step()

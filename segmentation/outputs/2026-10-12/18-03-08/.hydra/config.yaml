@@ -1,0 +1,148 @@
+experiment:
+  project: cross_view_transformers_test
+  uuid: ${now:%m%d_%H%M%S}
+  save_dir: ${hydra:runtime.cwd}/logs/
+  seed: 2022
+  checkpoint_interval: 1000
+  log_image_interval: 500
+  ckptt: '-'
+loader:
+  batch_size: 4
+  num_workers: 4
+  pin_memory: true
+  prefetch_factor: 45
+optimizer:
+  lr: 0.004
+  weight_decay: 1.0e-07
+scheduler:
+  div_factor: 10
+  pct_start: 0.3
+  final_div_factor: 10
+  max_lr: ${optimizer.lr}
+  total_steps: ${trainer.max_steps}
+  cycle_momentum: false
+trainer:
+  max_steps: 10000
+  log_every_n_steps: 50
+  gpus: -1
+  precision: 32
+  limit_train_batches: 1.0
+  limit_val_batches: 1.0
+  check_val_every_n_epoch: 1
+  val_check_interval: 1.0
+  num_sanity_val_steps: 0
+  gradient_clip_val: 5.0
+  sync_batchnorm: false
+model:
+  _target_: cross_view_transformer.model.cvt.CrossViewTransformer
+  dim_last: 64
+  outputs:
+    bev:
+    - 0
+    - 1
+    center:
+    - 1
+    - 2
+  encoder:
+    _target_: cross_view_transformer.model.geometry_kernel_transformer_encoder.GeometryKernelEncoder
+    dim: 128
+    scale: 1.0
+    middle:
+    - 2
+    - 2
+    backbone:
+      _target_: cross_view_transformer.model.backbones.efficientnet.EfficientNetExtractor
+      model_name: efficientnet-b4
+      layer_names:
+      - reduction_2
+      - reduction_4
+      image_height: ${data.image.h}
+      image_width: ${data.image.w}
+    cross_view:
+      heads: 4
+      dim_head: 32
+      qkv_bias: true
+      skip: true
+      no_image_features: false
+      image_height: ${data.image.h}
+      image_width: ${data.image.w}
+      bev_z: 1.0
+      kernel_h: 7
+      kernel_w: 1
+      sampling_type: index
+      use_kernel_conv: true
+      kernel_conv_h: 1
+      kernel_conv_w: 7
+    bev_embedding:
+      sigma: 1.0
+      bev_height: ${data.bev.h}
+      bev_width: ${data.bev.w}
+      h_meters: ${data.bev.h_meters}
+      w_meters: ${data.bev.w_meters}
+      offset: ${data.bev.offset}
+      decoder_blocks: ${model.decoder.blocks}
+  decoder:
+    _target_: cross_view_transformer.model.decoder.Decoder
+    dim: ${model.encoder.dim}
+    blocks:
+    - 128
+    - 128
+    - 64
+    residual: true
+    factor: 2
+data:
+  dataset: nuscenes_generated
+  num_classes: 12
+  version: v1.0-trainval
+  dataset_dir: /media/franco/hdd/dataset/nuscenes_full/nuscenes/
+  labels_dir: /media/franco/hdd/dataset/nuscenes_full/GKT_labels/
+  cameras:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  label_indices:
+  - - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 10
+    - 11
+  bev:
+    h: 200
+    w: 200
+    h_meters: 100.0
+    w_meters: 100.0
+    offset: 0.0
+  augment: none
+  image:
+    h: 224
+    w: 480
+    top_crop: 46
+visualization:
+  _target_: cross_view_transformer.visualizations.nuscenes_viz.NuScenesViz
+  label_indices: ${data.label_indices}
+loss:
+  visible_weight: 1.0
+  visible:
+    _target_: cross_view_transformer.losses.BinarySegmentationLoss
+    label_indices: ${data.label_indices}
+    gamma: 2.0
+    alpha: -1.0
+    min_visibility: 2
+  center_weight: 0.1
+  center:
+    _target_: cross_view_transformer.losses.CenterLoss
+    gamma: 2.0
+    min_visibility: 2
+metrics:
+  iou:
+    _target_: cross_view_transformer.metrics.IoUMetric
+    label_indices: ${data.label_indices}
+    min_visibility: 2
+  iou_with_occlusions:
+    _target_: cross_view_transformer.metrics.IoUMetric
+    label_indices: ${data.label_indices}
