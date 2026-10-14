@@ -40,7 +40,7 @@ scheduler:
 
 # lightning trainer
 trainer:
-  max_steps: 10000 #317000 #30001
+  max_steps: 317000 #30001
   log_every_n_steps: 50
 
   gpus: -1

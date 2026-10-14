@@ -45,7 +45,12 @@ class VisualizationCallback(pl.Callback):
     @rank_zero_only
     def _visualize_batch(self, outputs: STEP_OUTPUT, trainer: pl.Trainer, batch_idx: int, prefix: str):
         for key, viz in self.visualizers.items():
-            self._log_image(viz(**outputs), f'{prefix}/{key}', trainer.logger)
+            image_batch = viz(**outputs)
+            for logger in trainer.loggers:
+                if isinstance(logger, pl.loggers.TensorBoardLogger):
+                    self._log_image(image_batch, f'{prefix}/{key}', logger.experiment)
+                elif isinstance(logger, WandbLogger):
+                    self._log_image(image_batch, f'{prefix}/{key}', logger)
 
     def _log_image(self, image_batch, tag, logger):
         if isinstance(logger, torch.utils.tensorboard.writer.SummaryWriter):
