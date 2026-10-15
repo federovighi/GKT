@@ -1,0 +1,6 @@
+[2026-10-15 10:42:08,754][torch.distributed.nn.jit.instantiator][INFO] - Created a temporary directory at /tmp/tmp99852te0
+[2026-10-15 10:42:08,754][torch.distributed.nn.jit.instantiator][INFO] - Writing /tmp/tmp99852te0/_remote_module_non_scriptable.py
+[2026-10-15 10:42:08,992][__main__][INFO] - Searching /home/federicorovighi/projects/GKT/GKT_repo/segmentation/logs.
+[2026-10-15 10:42:09,389][torch.distributed.distributed_c10d][INFO] - Added key: store_based_barrier_key:1 to store for rank: 0
+[2026-10-15 10:42:09,389][torch.distributed.distributed_c10d][INFO] - Rank 0: Completed store-based barrier for key:store_based_barrier_key:1 with 1 nodes.
+[2026-10-15 10:43:28,685][cross_view_transformer.tabular_logger][INFO] - train/metrics/iou@0.40:0.000000, train/metrics/iou@0.50:0.000000, train/metrics/iou_with_occlusions@0.40:0.000000, train/metrics/iou_with_occlusions@0.50:0.000000, val/loss:0.011054, val/loss/visible:0.010992, val/loss/center:0.000624, val/metrics/iou@0.40:0.373787, val/metrics/iou@0.50:0.348367, val/metrics/iou_with_occlusions@0.40:0.334970, val/metrics/iou_with_occlusions@0.50:0.287284, epoch:0, step:0

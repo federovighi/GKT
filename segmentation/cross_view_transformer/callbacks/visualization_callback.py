@@ -8,6 +8,10 @@ from pytorch_lightning.loggers.wandb import WandbLogger
 from pytorch_lightning.utilities import rank_zero_only
 from pytorch_lightning.utilities.warnings import rank_zero_warn
 
+import warnings
+
+warnings.filterwarnings("once", message="Invalid logger.*")
+
 
 class VisualizationCallback(pl.Callback):
     def __init__(self, visualizers, log_image_interval=1000):
@@ -45,12 +49,7 @@ class VisualizationCallback(pl.Callback):
     @rank_zero_only
     def _visualize_batch(self, outputs: STEP_OUTPUT, trainer: pl.Trainer, batch_idx: int, prefix: str):
         for key, viz in self.visualizers.items():
-            image_batch = viz(**outputs)
-            for logger in trainer.loggers:
-                if isinstance(logger, pl.loggers.TensorBoardLogger):
-                    self._log_image(image_batch, f'{prefix}/{key}', logger.experiment)
-                elif isinstance(logger, WandbLogger):
-                    self._log_image(image_batch, f'{prefix}/{key}', logger)
+            self._log_image(viz(**outputs), f'{prefix}/{key}', trainer.logger)
 
     def _log_image(self, image_batch, tag, logger):
         if isinstance(logger, torch.utils.tensorboard.writer.SummaryWriter):
@@ -58,4 +57,4 @@ class VisualizationCallback(pl.Callback):
         elif isinstance(logger, WandbLogger):
             logger.log_image(tag, image_batch)
         else:
-            rank_zero_warn(f'Invalid logger {logger}')
+            rank_zero_warn(f'Invalid logger {type(logger).__name__}', category=UserWarning)
