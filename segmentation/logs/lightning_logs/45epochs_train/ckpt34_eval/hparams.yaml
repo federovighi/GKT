@@ -1,11 +1,11 @@
 experiment:
   project: cross_view_transformers_test
-  uuid: ${now:%m%d_%H%M%S}
-  save_dir: ${hydra:runtime.cwd}/logs/
+  uuid: '1016_113251'
+  save_dir: /home/federicorovighi/projects/GKT/GKT_repo/segmentation/logs/
   seed: 2022
   checkpoint_interval: 1000
   log_image_interval: 500
-  ckptt: /home/federicorovighi/projects/GKT/GKT_repo/segmentation/checkpoints/45epochs/epoch=21-step=154726.ckpt
+  ckptt: /home/federicorovighi/projects/GKT/GKT_repo/segmentation/checkpoints/45epochs/epoch=34-step=246155.ckpt
 loader:
   batch_size: 4
   num_workers: 4
@@ -18,8 +18,8 @@ scheduler:
   div_factor: 10
   pct_start: 0.3
   final_div_factor: 10
-  max_lr: ${optimizer.lr}
-  total_steps: ${trainer.max_steps}
+  max_lr: 0.004
+  total_steps: 317000
   cycle_momentum: false
 trainer:
   max_steps: 317000
@@ -56,16 +56,16 @@ model:
       layer_names:
       - reduction_2
       - reduction_4
-      image_height: ${data.image.h}
-      image_width: ${data.image.w}
+      image_height: 224
+      image_width: 480
     cross_view:
       heads: 4
       dim_head: 32
       qkv_bias: true
       skip: true
       no_image_features: false
-      image_height: ${data.image.h}
-      image_width: ${data.image.w}
+      image_height: 224
+      image_width: 480
       bev_z: 1.0
       kernel_h: 7
       kernel_w: 1
@@ -75,15 +75,18 @@ model:
       kernel_conv_w: 7
     bev_embedding:
       sigma: 1.0
-      bev_height: ${data.bev.h}
-      bev_width: ${data.bev.w}
-      h_meters: ${data.bev.h_meters}
-      w_meters: ${data.bev.w_meters}
-      offset: ${data.bev.offset}
-      decoder_blocks: ${model.decoder.blocks}
+      bev_height: 200
+      bev_width: 200
+      h_meters: 100.0
+      w_meters: 100.0
+      offset: 0.0
+      decoder_blocks:
+      - 128
+      - 128
+      - 64
   decoder:
     _target_: cross_view_transformer.model.decoder.Decoder
-    dim: ${model.encoder.dim}
+    dim: 128
     blocks:
     - 128
     - 128
@@ -124,12 +127,26 @@ data:
     top_crop: 46
 visualization:
   _target_: cross_view_transformer.visualizations.nuscenes_viz.NuScenesViz
-  label_indices: ${data.label_indices}
+  label_indices:
+  - - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 10
+    - 11
 loss:
   visible_weight: 1.0
   visible:
     _target_: cross_view_transformer.losses.BinarySegmentationLoss
-    label_indices: ${data.label_indices}
+    label_indices:
+    - - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 10
+      - 11
     gamma: 2.0
     alpha: -1.0
     min_visibility: 2
@@ -141,8 +158,22 @@ loss:
 metrics:
   iou:
     _target_: cross_view_transformer.metrics.IoUMetric
-    label_indices: ${data.label_indices}
+    label_indices:
+    - - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 10
+      - 11
     min_visibility: 2
   iou_with_occlusions:
     _target_: cross_view_transformer.metrics.IoUMetric
-    label_indices: ${data.label_indices}
+    label_indices:
+    - - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 10
+      - 11

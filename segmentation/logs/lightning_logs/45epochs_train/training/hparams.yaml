@@ -1,6 +1,6 @@
 experiment:
   project: cross_view_transformers_test
-  uuid: '1014_164107'
+  uuid: '1015_112950'
   save_dir: /home/federicorovighi/projects/GKT/GKT_repo/segmentation/logs/
   seed: 2022
   checkpoint_interval: 1000
