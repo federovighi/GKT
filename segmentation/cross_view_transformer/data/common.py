@@ -15,7 +15,7 @@ def get_split(split, dataset_name):
     return split_path.read_text().strip().split('\n')
 
 
-def get_view_matrix(h=200, w=200, h_meters=100.0, w_meters=100.0, offset=0.0):
+def get_view_matrix(h=100, w=200, h_meters=50.0, w_meters=100.0, offset=0.5):  # less_cam modificato valori e offset
     sh = h / h_meters
     sw = w / w_meters
 

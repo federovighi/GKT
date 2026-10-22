@@ -37,8 +37,10 @@ class DecoderBlock(torch.nn.Module):
 
 
 class Decoder(nn.Module):
-    def __init__(self, dim, blocks, residual=True, factor=2):
+    def __init__(self, dim, blocks, residual=True, factor=2, output_size=None): # less_cam added the desired output size
         super().__init__()
+
+        self.output_size = tuple(output_size) if output_size is not None else None   # less_cam 
 
         layers = list()
         channels = dim
@@ -57,5 +59,8 @@ class Decoder(nn.Module):
 
         for layer in self.layers:
             y = layer(y, x)
+
+        if self.output_size is not None and y.shape[-2:] != self.output_size:   # less_cam adapting the output to match yhe desired size
+            y = F.interpolate(y, size=self.output_size, mode='bilinear', align_corners=True)
 
         return y

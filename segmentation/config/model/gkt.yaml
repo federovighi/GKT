@@ -56,3 +56,4 @@ decoder:
   blocks: [128, 128, 64]
   residual: True
   factor: 2
+  output_size: ["${data.bev.h}", "${data.bev.w}"]    # less_cam adaptation for decoder modifcation

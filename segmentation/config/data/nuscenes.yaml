@@ -7,7 +7,7 @@ dataset_dir: ???
 labels_dir: ???
 
 # used to generate dataset
-cameras: [[0, 1, 2, 3, 4, 5]]
+cameras: [[0, 1, 2]] #, 3, 4, 5]]  less_cam 
 
 # required for train/eval
 # Takes the form [[i, j, ...], [p, q, ...]]
@@ -17,11 +17,11 @@ label_indices: null
 
 # label parameters
 bev: 
-  h: 200
+  h: 100  # less_cam
   w: 200
-  h_meters: 100.0
+  h_meters: 50.0 # less_cam
   w_meters: 100.0
-  offset: 0.0
+  offset: 0.5   # less_cam Configurazione con ego in basso al centro
 
 # input parameters (not used in label generation)
 augment: 'none'

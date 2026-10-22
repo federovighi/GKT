@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+import math
+
 from einops import rearrange, repeat
 from torchvision.models.resnet import Bottleneck
 from typing import List
@@ -25,7 +27,7 @@ def generate_grid(height: int, width: int):
     return indices
 
 
-def get_view_matrix(h=200, w=200, h_meters=100.0, w_meters=100.0, offset=0.0):
+def get_view_matrix(h=100, w=200, h_meters=50.0, w_meters=100.0, offset=0.5):   # less_cam adapting the parameters
     """
     copied from ..data.common but want to keep models standalone
     """
@@ -94,9 +96,11 @@ class BEVEmbedding(nn.Module):
         """
         super().__init__()
 
-        # each decoder block upsamples the bev embedding by a factor of 2
-        h = bev_height // (2 ** len(decoder_blocks))
-        w = bev_width // (2 ** len(decoder_blocks))
+        # each decoder block upsamples the bev embedding by a factor of 2 rounding up
+        scale = 2 ** len(decoder_blocks)
+
+        h = math.ceil(bev_height / scale)
+        w = math.ceil(bev_width / scale)
 
         # bev coordinates
         grid = generate_grid(h, w).squeeze(0)
