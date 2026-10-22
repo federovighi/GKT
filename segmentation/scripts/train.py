@@ -56,7 +56,7 @@ def main(cfg):
     callbacks = [
         LearningRateMonitor(logging_interval='epoch'),
         ModelCheckpoint(
-            dirpath="/home/federicorovighi//projects/GKT/GKT_repo/segmentation/checkpoints/45epochs",
+            dirpath="/home/federicorovighi/projects/GKT/GKT_repo/segmentation/checkpoints/temp",
             filename='epoch={epoch}-step={step}', 
             auto_insert_metric_name=False, 
             every_n_epochs=1, 
