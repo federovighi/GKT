@@ -1,0 +1,12 @@
+train/metrics/iou@0.40:0.0, 
+train/metrics/iou@0.50:0.0, 
+train/metrics/iou_with_occlusions@0.40:0.0, 
+train/metrics/iou_with_occlusions@0.50:0.0, 
+val/loss:0.014262395910918713, 
+val/loss/visible:0.014195173978805542, 
+val/loss/center:0.000672169728204608, 
+val/metrics/iou@0.40:0.36582687497138977, 
+val/metrics/iou@0.50:0.3552553057670593, 
+val/metrics/iou_with_occlusions@0.40:0.3349165618419647, 
+val/metrics/iou_with_occlusions@0.50:0.3037000596523285, 
+epoch:0, step:0
