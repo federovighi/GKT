@@ -1,0 +1,11 @@
+Checkpoint: /home/federicorovighi/projects/GKT/GKT_repo/segmentation/checkpoints/45epochs/epoch=34-step=246155.ckpt
+
+========== REGION METRICS (@0.50) ==========
+Region                       IoU  Precision     Recall           TP           FP           FN
+Complete BEV              0.3271     0.6291     0.4052      1049249       618658      1540101
+X 0-10 m                  0.4328     0.7095     0.5260       323407       132433       291462
+X 10-25 m                 0.3893     0.6631     0.4853       426928       216879       452717
+X 25-50 m                 0.2191     0.5260     0.2730       298914       269346       795922
+Center |Y|<=20            0.4100     0.6660     0.5161       841116       421776       788614
+Lateral |Y|>20            0.1800     0.5139     0.2169       208133       196882       751487
+Close and lateral         0.2492     0.5752     0.3054        79788        58922       181468

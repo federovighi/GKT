@@ -1,0 +1,15 @@
+Checkpoint: checkpoints/45epochs_3cam/epoch=42-step=302419.ckpt
+
+========== REGION METRICS (@0.50) ==========
+Region                       IoU  Precision     Recall           TP           FP           FN
+Complete BEV              0.3037     0.6434     0.3652       945316       523948      1643394
+X 0-10 m                  0.3772     0.7060     0.4475       274844       114448       339383
+X 10-25 m                 0.3739     0.6797     0.4538       399209       188151       480438
+X 25-50 m                 0.2061     0.5507     0.2478       271263       221349       823573
+Center |Y|<=20            0.3888     0.6729     0.4793       781040       379635       848374
+Lateral |Y|>20            0.1489     0.5323     0.1712       164276       144313       795020
+Close and lateral         0.1830     0.5788     0.2111        55079        40078       205851
+Covered (3cam)            0.3071     0.6448     0.3696       920295       507037      1569618
+Uncovered (3cam)          0.2162     0.5967     0.2533        25021        16911        73776
+
+Coverage partition verification: OK
